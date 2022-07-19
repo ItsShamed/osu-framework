@@ -163,7 +163,10 @@ namespace osu.Framework.Graphics.UserInterface
                     var drives = DriveInfo.GetDrives();
 
                     foreach (var drive in drives)
-                        directoryFlow.Add(CreateDirectoryItem(drive.RootDirectory));
+                    {
+                        if (drive.IsReady)
+                            directoryFlow.Add(CreateDirectoryItem(drive.RootDirectory));
+                    }
 
                     return;
                 }
