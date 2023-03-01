@@ -29,5 +29,13 @@ namespace osu.Framework.Audio
         /// The aggregate rate at which the component is played back (does not affect pitch). 1 is 100% playback speed.
         /// </summary>
         IBindable<double> AggregateTempo { get; }
+
+        /// <summary>
+        /// The aggregate pitch at which the component is played back (does not affect rate).
+        /// </summary>
+        /// <remarks>
+        /// Pitch changes are measured in cents.
+        /// </remarks>
+        IBindable<double> AggregatePitch { get; }
     }
 }

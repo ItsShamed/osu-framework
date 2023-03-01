@@ -5,15 +5,15 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using ManagedBass;
 using ManagedBass.Fx;
-using osu.Framework.IO;
-using System.Threading.Tasks;
 using osu.Framework.Audio.Callbacks;
 using osu.Framework.Audio.Mixing;
 using osu.Framework.Audio.Mixing.Bass;
 using osu.Framework.Extensions;
 using osu.Framework.Extensions.ObjectExtensions;
+using osu.Framework.IO;
 using osu.Framework.Utils;
 
 namespace osu.Framework.Audio.Track
@@ -353,6 +353,7 @@ namespace osu.Framework.Audio.Track
 
             Bass.ChannelSetAttribute(activeStream, ChannelAttribute.Volume, AggregateVolume.Value);
             Bass.ChannelSetAttribute(activeStream, ChannelAttribute.Pan, AggregateBalance.Value);
+            Bass.ChannelSetAttribute(tempoAdjustStream, ChannelAttribute.Pitch, AggregatePitch.Value / 100);
             relativeFrequencyHandler.SetFrequency(AggregateFrequency.Value);
 
             Bass.ChannelSetAttribute(tempoAdjustStream, ChannelAttribute.Tempo, (Math.Abs(AggregateTempo.Value) - 1) * 100);

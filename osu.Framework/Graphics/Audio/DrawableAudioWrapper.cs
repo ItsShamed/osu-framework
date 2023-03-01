@@ -40,6 +40,14 @@ namespace osu.Framework.Graphics.Audio
         /// </summary>
         public BindableNumber<double> Tempo => adjustments.Tempo;
 
+        /// <summary>
+        /// The pitch at which the component is played back (does not affect rate).
+        /// </summary>
+        /// <remarks>
+        /// Pitch changes are measured in cents.
+        /// </remarks>
+        public BindableNumber<double> Pitch => adjustments.Pitch;
+
         public void BindAdjustments(IAggregateAudioAdjustment component) => adjustments.BindAdjustments(component);
 
         public void UnbindAdjustments(IAggregateAudioAdjustment component) => adjustments.UnbindAdjustments(component);
@@ -165,5 +173,7 @@ namespace osu.Framework.Graphics.Audio
         public IBindable<double> AggregateFrequency => adjustments.AggregateFrequency;
 
         public IBindable<double> AggregateTempo => adjustments.AggregateTempo;
+
+        public IBindable<double> AggregatePitch => adjustments.AggregatePitch;
     }
 }

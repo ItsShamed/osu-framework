@@ -51,15 +51,30 @@ namespace osu.Framework.Audio
             Default = 1,
         };
 
+        /// <summary>
+        /// The pitch at which the component is played back (does not affect rate).
+        /// </summary>
+        /// <remarks>
+        /// Pitch changes are measured in cents.
+        /// </remarks>
+        public BindableNumber<double> Pitch { get; } = new BindableDouble
+        {
+            MinValue = -12 * 100,
+            MaxValue = 12 * 100,
+            Precision = 1f
+        };
+
         public IBindable<double> AggregateVolume => volumeAggregate.Result;
         public IBindable<double> AggregateBalance => balanceAggregate.Result;
         public IBindable<double> AggregateFrequency => frequencyAggregate.Result;
         public IBindable<double> AggregateTempo => tempoAggregate.Result;
+        public IBindable<double> AggregatePitch => pitchAggregate.Result;
 
         private AggregateBindable<double> volumeAggregate;
         private AggregateBindable<double> balanceAggregate;
         private AggregateBindable<double> frequencyAggregate;
         private AggregateBindable<double> tempoAggregate;
+        private AggregateBindable<double> pitchAggregate;
 
         public AudioAdjustments()
         {
@@ -111,6 +126,9 @@ namespace osu.Framework.Audio
 
                 case AdjustableProperty.Tempo:
                     return ref tempoAggregate;
+
+                case AdjustableProperty.Pitch:
+                    return ref pitchAggregate;
             }
 
             throw new ArgumentException($"{nameof(AdjustableProperty)} \"{type}\" is missing mapping", nameof(type));
@@ -131,6 +149,9 @@ namespace osu.Framework.Audio
 
                 case AdjustableProperty.Tempo:
                     return Tempo;
+
+                case AdjustableProperty.Pitch:
+                    return Pitch;
             }
 
             throw new ArgumentException($"{nameof(AdjustableProperty)} \"{type}\" is missing mapping", nameof(type));
@@ -145,6 +166,9 @@ namespace osu.Framework.Audio
 
                 case AdjustableProperty.Balance:
                     return (a, b) => a + b;
+
+                case AdjustableProperty.Pitch:
+                    return (a, b) => Math.Clamp(a + b, -12 * 100, 12 * 100);
             }
         }
     }

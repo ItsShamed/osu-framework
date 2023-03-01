@@ -30,6 +30,9 @@ namespace osu.Framework.Audio
                 case AdjustableProperty.Tempo:
                     return adjustment.AggregateTempo;
 
+                case AdjustableProperty.Pitch:
+                    return adjustment.AggregatePitch;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), "Invalid adjustable property type.");
             }

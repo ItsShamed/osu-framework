@@ -31,6 +31,14 @@ namespace osu.Framework.Audio
         BindableNumber<double> Tempo { get; }
 
         /// <summary>
+        /// The pitch at which the component is played back (does not affect rate).
+        /// </summary>
+        /// <remarks>
+        /// Pitch changes are measured in cents.
+        /// </remarks>
+        BindableNumber<double> Pitch { get; }
+
+        /// <summary>
         /// Bind all adjustments from an <see cref="IAggregateAudioAdjustment"/>.
         /// </summary>
         /// <param name="component">The adjustment source.</param>
@@ -100,6 +108,14 @@ namespace osu.Framework.Audio
             => component.TempoTo(newTempo, duration, new DefaultEasingFunction(easing));
 
         /// <summary>
+        /// Smoothly adjusts <see cref="IAdjustableAudioComponent.Pitch"/> over time.
+        /// </summary>
+        /// <returns> A <see cref="TransformSequence{T}"/> to which further transforms can be added.</returns>
+        public static TransformSequence<T> PitchTo<T>(this T component, double newPitch, double duration = 0, Easing easing = Easing.None)
+            where T : class, IAdjustableAudioComponent, IDrawable
+            => component.PitchTo(newPitch, duration, new DefaultEasingFunction(easing));
+
+        /// <summary>
         /// Smoothly adjusts <see cref="IAdjustableAudioComponent.Volume"/> over time.
         /// </summary>
         /// <returns>A <see cref="TransformSequence{T}"/> to which further transforms can be added.</returns>
@@ -130,6 +146,14 @@ namespace osu.Framework.Audio
         public static TransformSequence<T> TempoTo<T>(this TransformSequence<T> sequence, double newTempo, double duration = 0, Easing easing = Easing.None)
             where T : class, IAdjustableAudioComponent, IDrawable
             => sequence.TempoTo(newTempo, duration, new DefaultEasingFunction(easing));
+
+        /// <summary>
+        /// Smoothly adjusts <see cref="IAdjustableAudioComponent.Pitch"/> over time.
+        /// </summary>
+        /// <returns> A <see cref="TransformSequence{T}"/> to which further transforms can be added.</returns>
+        public static TransformSequence<T> PitchTo<T>(this TransformSequence<T> sequence, double newPitch, double duration = 0, Easing easing = Easing.None)
+            where T : class, IAdjustableAudioComponent, IDrawable
+            => sequence.PitchTo(newPitch, duration, new DefaultEasingFunction(easing));
 
         #endregion
 
@@ -172,6 +196,15 @@ namespace osu.Framework.Audio
             => component.TransformBindableTo(component.Tempo, newTempo, duration, easing);
 
         /// <summary>
+        /// Smoothly adjusts <see cref="IAdjustableAudioComponent.Pitch"/> over time.
+        /// </summary>
+        /// <returns>A <see cref="TransformSequence{T}"/> to which further transformations can be added.</returns>
+        public static TransformSequence<T> PitchTo<T, TEasing>(this T component, double newPitch, double duration, TEasing easing)
+            where T : class, IAdjustableAudioComponent, IDrawable
+            where TEasing : IEasingFunction
+            => component.TransformBindableTo(component.Pitch, newPitch, duration, easing);
+
+        /// <summary>
         /// Smoothly adjusts <see cref="IAdjustableAudioComponent.Volume"/> over time.
         /// </summary>
         /// <returns>A <see cref="TransformSequence{T}"/> to which further transforms can be added.</returns>
@@ -206,6 +239,15 @@ namespace osu.Framework.Audio
             where T : class, IAdjustableAudioComponent, IDrawable
             where TEasing : IEasingFunction
             => sequence.Append(o => o.TransformBindableTo(o.Tempo, newTempo, duration, easing));
+
+        /// <summary>
+        /// Smoothly adjusts <see cref="IAdjustableAudioComponent.Pitch"/> over time.
+        /// </summary>
+        /// <returns>A <see cref="TransformSequence{T}"/> to which further transformations can be added.</returns>
+        public static TransformSequence<T> PitchTo<T, TEasing>(this TransformSequence<T> sequence, double newPitch, double duration, TEasing easing)
+            where T : class, IAdjustableAudioComponent, IDrawable
+            where TEasing : IEasingFunction
+            => sequence.Append(o => o.TransformBindableTo(o.Pitch, newPitch, duration, easing));
 
         #endregion
     }

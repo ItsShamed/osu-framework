@@ -32,6 +32,7 @@ namespace osu.Framework.Audio
                     adj.AggregateBalance.ValueChanged += InvalidateState;
                     adj.AggregateFrequency.ValueChanged += InvalidateState;
                     adj.AggregateTempo.ValueChanged += InvalidateState;
+                    adj.AggregatePitch.ValueChanged += InvalidateState;
 
                     adjustments = adj;
                 }
@@ -59,6 +60,14 @@ namespace osu.Framework.Audio
         /// Rate at which the component is played back (does not affect pitch). 1 is 100% playback speed.
         /// </summary>
         public BindableNumber<double> Tempo => Adjustments.Tempo;
+
+        /// <summary>
+        /// The pitch at which the component is played back (does not affect rate).
+        /// </summary>
+        /// <remarks>
+        /// Pitch changes are measured in cents.
+        /// </remarks>
+        public BindableNumber<double> Pitch => Adjustments.Pitch;
 
         public void AddAdjustment(AdjustableProperty type, IBindable<double> adjustBindable) =>
             Adjustments.AddAdjustment(type, adjustBindable);
@@ -108,6 +117,8 @@ namespace osu.Framework.Audio
 
         public IBindable<double> AggregateTempo => Adjustments.AggregateTempo;
 
+        public IBindable<double> AggregatePitch => Adjustments.AggregatePitch;
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
@@ -116,6 +127,7 @@ namespace osu.Framework.Audio
             AggregateBalance.UnbindAll();
             AggregateFrequency.UnbindAll();
             AggregateTempo.UnbindAll();
+            AggregatePitch.UnbindAll();
         }
     }
 
@@ -124,6 +136,7 @@ namespace osu.Framework.Audio
         Volume,
         Balance,
         Frequency,
-        Tempo
+        Tempo,
+        Pitch
     }
 }
