@@ -61,7 +61,6 @@ namespace osu.Framework.Audio
         {
             MinValue = -12 * 100,
             MaxValue = 12 * 100,
-            Precision = 1f
         };
 
         public IBindable<double> AggregateVolume => volumeAggregate.Result;
